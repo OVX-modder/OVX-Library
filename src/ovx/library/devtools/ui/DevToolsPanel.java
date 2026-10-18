@@ -52,7 +52,8 @@ public class DevToolsPanel extends Table {
     private void buildHeader() {
         Table header = new Table();
         header.add("OVX DevTools").expandX().left().pad(8);
-        header.add(new TextButton("X", Styles.defaultt, this::removeSelf)).right().pad(8);
+        // Fixed constructor: use .clicked()
+        header.add(new TextButton("X", Styles.defaultt).clicked(this::removeSelf)).right().pad(8);
         add(header).growX();
     }
 
@@ -81,7 +82,8 @@ public class DevToolsPanel extends Table {
 
     private void buildSearchAndSort() {
         Table bar = new Table();
-        TextField searchField = new TextField(search, Styles.field);
+        // Fixed to Styles.defaultField
+        TextField searchField = new TextField(search, Styles.defaultField);
         searchField.setMessageText("Search...");
         searchField.changed(() -> { search = searchField.getText().toLowerCase(); rebuildList(); });
         bar.add(searchField).growX().pad(4);
@@ -94,7 +96,8 @@ public class DevToolsPanel extends Table {
 
     private void buildList() {
         listTable = new Table();
-        ScrollPane pane = new ScrollPane(listTable, Styles.pane);
+        // Fixed to Styles.defaultPane
+        ScrollPane pane = new ScrollPane(listTable, Styles.defaultPane);
         pane.setFadeScrollBars(false);
         add(pane).grow().pad(8);
         rebuildList();
@@ -141,7 +144,7 @@ public class DevToolsPanel extends Table {
     private void buildActionButton() {
         Table bar = new Table();
         if (tab == TabKind.KILL) {
-            TextButton done = new TextButton("Done — Kill all " + selectedTeam.label, Styles.defaultt);
+            TextButton done = new TextButton("Done - Kill all " + selectedTeam.label, Styles.defaultt);
             done.clicked(this::killTeam);
             bar.add(done).growX().pad(8);
         } else {
