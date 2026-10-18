@@ -52,8 +52,9 @@ public class DevToolsPanel extends Table {
     private void buildHeader() {
         Table header = new Table();
         header.add("OVX DevTools").expandX().left().pad(8);
-        // Fixed constructor: use .clicked()
-        header.add(new TextButton("X", Styles.defaultt).clicked(this::removeSelf)).right().pad(8);
+        TextButton close = new TextButton("X", Styles.defaultt);
+        close.clicked(this::removeSelf);
+        header.add(close).right().pad(8);
         add(header).growX();
     }
 
