@@ -52,7 +52,7 @@ public class DevToolsPanel extends Table {
     private void buildHeader() {
         Table header = new Table();
         header.add("OVX DevTools").expandX().left().pad(8);
-        header.add(new TextButton("X", Styles.defaultTextButtonStyle, this::removeSelf)).right().pad(8);
+        header.add(new TextButton("X", Styles.defaultt, this::removeSelf)).right().pad(8);
         add(header).growX();
     }
 
@@ -60,7 +60,7 @@ public class DevToolsPanel extends Table {
         Table teams = new Table();
         teams.add("Team: ").pad(4);
         for (TeamKind t : TeamKind.values()) {
-            TextButton b = new TextButton(t.label, Styles.defaultTextButtonStyle);
+            TextButton b = new TextButton(t.label, Styles.defaultt);
             b.clicked(() -> { selectedTeam = t; rebuild(); });
             if (t == selectedTeam) b.setColor(t.color);
             teams.add(b).pad(4);
@@ -71,7 +71,7 @@ public class DevToolsPanel extends Table {
     private void buildTabs() {
         Table tabs = new Table();
         for (TabKind t : TabKind.values()) {
-            TextButton b = new TextButton(t.label, Styles.defaultTextButtonStyle);
+            TextButton b = new TextButton(t.label, Styles.defaultt);
             b.clicked(() -> { tab = t; rebuild(); });
             if (t == tab) b.setColor(Color.green);
             tabs.add(b).pad(4);
@@ -81,12 +81,12 @@ public class DevToolsPanel extends Table {
 
     private void buildSearchAndSort() {
         Table bar = new Table();
-        TextField searchField = new TextField(search, Styles.defaultField);
+        TextField searchField = new TextField(search, Styles.field);
         searchField.setMessageText("Search...");
         searchField.changed(() -> { search = searchField.getText().toLowerCase(); rebuildList(); });
         bar.add(searchField).growX().pad(4);
 
-        TextButton sortBtn = new TextButton(sortMode.label, Styles.defaultTextButtonStyle);
+        TextButton sortBtn = new TextButton(sortMode.label, Styles.defaultt);
         sortBtn.clicked(() -> { sortMode = sortMode.next(); rebuildList(); sortBtn.setText(sortMode.label); });
         bar.add(sortBtn).width(120).pad(4);
         add(bar).growX().pad(8);
@@ -94,7 +94,7 @@ public class DevToolsPanel extends Table {
 
     private void buildList() {
         listTable = new Table();
-        ScrollPane pane = new ScrollPane(listTable, Styles.defaultPane);
+        ScrollPane pane = new ScrollPane(listTable, Styles.pane);
         pane.setFadeScrollBars(false);
         add(pane).grow().pad(8);
         rebuildList();
@@ -118,7 +118,7 @@ public class DevToolsPanel extends Table {
             }
             units.sort(sortMode.comparator());
             for (UnitType u : units) {
-                TextButton row = new TextButton(u.localizedName, Styles.defaultTextButtonStyle);
+                TextButton row = new TextButton(u.localizedName, Styles.defaultt);
                 row.clicked(() -> beginUnitPlacement(u, selectedTeam.team));
                 listTable.add(row).growX().pad(2).row();
             }
@@ -131,7 +131,7 @@ public class DevToolsPanel extends Table {
             }
             cores.sort(Comparator.comparing(b -> b.name));
             for (Block b : cores) {
-                TextButton row = new TextButton(b.localizedName, Styles.defaultTextButtonStyle);
+                TextButton row = new TextButton(b.localizedName, Styles.defaultt);
                 row.clicked(() -> beginCorePlacement(b, selectedTeam.team));
                 listTable.add(row).growX().pad(2).row();
             }
@@ -141,7 +141,7 @@ public class DevToolsPanel extends Table {
     private void buildActionButton() {
         Table bar = new Table();
         if (tab == TabKind.KILL) {
-            TextButton done = new TextButton("Done — Kill all " + selectedTeam.label, Styles.defaultTextButtonStyle);
+            TextButton done = new TextButton("Done — Kill all " + selectedTeam.label, Styles.defaultt);
             done.clicked(this::killTeam);
             bar.add(done).growX().pad(8);
         } else {
@@ -196,7 +196,7 @@ public class DevToolsPanel extends Table {
             return switch (this) {
                 case ALPHA -> Comparator.comparing(u -> u.localizedName);
                 case MODS  -> Comparator.comparing(u -> u.name);
-                case TIER  -> Comparator.comparingInt(u -> u.tier);
+                case TIER  -> Comparator.comparing(u -> u.name);
             };
         }
     }
