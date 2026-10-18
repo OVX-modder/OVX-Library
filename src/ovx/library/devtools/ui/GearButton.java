@@ -13,7 +13,6 @@ public class GearButton extends Table {
 
     public static void spawn() {
         if (Core.scene == null) return;
-        // Avoid duplicate
         for (arc.scene.Element e : Core.scene.root.getChildren()) {
             if (e instanceof GearButton) return;
         }
