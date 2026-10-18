@@ -55,19 +55,18 @@ dependencies{
     compileOnly(if(mindustryVersion == "be") "Anuken:MindustryBuilds:latest" else "Anuken:Mindustry:$mindustryVersion")
 }
 
-tasks.jar{
-    archiveFileName.set("${projectName}Desktop.jar")
-
-    from(configurations.runtimeClasspath.map{ files ->
-        files.map{ if(it.isDirectory) it else zipTree(it) }
+tasks.jar {
+    archiveFileName.set("${projectName}.jar")
+    from(configurations.runtimeClasspath.map { files ->
+        files.map { if (it.isDirectory) it else zipTree(it) }
     })
 
-    from(projectDir){
+    from(projectDir) {
         include("mod.hjson")
         include("icon.png")
     }
 
-    from("assets/"){
+    from("assets/") {
         include("**")
     }
 }
