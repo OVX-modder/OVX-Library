@@ -1,6 +1,7 @@
 package ovx.library.devtools.ui;
 
 import arc.Core;
+import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Image;
@@ -30,14 +31,14 @@ public class GearButton extends Table {
         add(new Image(Core.atlas.find("settings"))).size(32).pad(8);
 
         addListener(new InputListener() {
-            @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
                 dragX = x; dragY = y; dragged = false; return true;
             }
             @Override public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 GearButton.this.moveBy(x - dragX, y - dragY);
                 dragged = true;
             }
-            @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            @Override public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button) {
                 if (!dragged) DevToolsPanel.toggle();
                 else {
                     Core.settings.put("ovxdev-x", GearButton.this.x);
