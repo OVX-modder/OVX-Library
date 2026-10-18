@@ -32,3 +32,8 @@ jobs:
         gh release upload "${{ github.event.release.tag_name }}" \
           "build/libs/${{ github.event.repository.name }}.jar" \
           --clobber
+       - name: Upload Mod
+  uses: actions/upload-artifact@v4
+  with:
+    name: ovx-library
+    path: build/libs/*.jar
