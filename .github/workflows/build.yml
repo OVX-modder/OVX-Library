@@ -1,28 +1,3 @@
-name: Build Mod
-
-on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Build with Gradle
-        run: gradle clean jar
-
       - name: Convert to Android DEX
         run: |
           set -euo pipefail
@@ -38,7 +13,13 @@ jobs:
             exit 1
           fi
 
-          cp "$jar_file" build/libs/ovx-library.jar
+          dest="build/libs/ovx-library.jar"
+          # Only copy if the found jar is different from the destination
+          if [ "$jar_file" != "$dest" ]; then
+            cp "$jar_file" "$dest"
+          else
+            echo "Jar is already at $dest; skipping copy."
+          fi
 
           wget -q https://github.com/pxb1988/dex2jar/releases/download/v2.4/dex-tools-v2.4.zip
           unzip -q dex-tools-v2.4.zip
@@ -57,9 +38,3 @@ jobs:
             find build -maxdepth 3 -type f | sort
             exit 1
           fi
-
-      - name: Upload Mod
-        uses: actions/upload-artifact@v4
-        with:
-          name: ovx-library
-          path: build/libs/*.jar
