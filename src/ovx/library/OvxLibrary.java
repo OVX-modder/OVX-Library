@@ -12,9 +12,4 @@ public class OvxLibrary extends Mod {
         OvxBootstrap.init();
         DevTools.init();
     }
-
-    @Override
-    public void loadContent() {
-        // Intentionally empty.
-    }
 }
