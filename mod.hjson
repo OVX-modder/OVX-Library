@@ -1,0 +1,8 @@
+name: "ovx-library"
+displayName: "OVX Library"
+author: "YourName"
+description: "Support library with bootstrap, gate, logger, and sandbox devtools."
+version: "1.0"
+minGameVersion: "160.7"
+main: "ovx.library.OvxLibrary"
+java: true
